@@ -44,6 +44,18 @@ class BirdsController < ApplicationController
     end
   end
 
+  # DESTROY /birds/:id
+  def destroy
+    bird = Bird.find_by(id: params[:id])
+    if bird
+      bird.destroy
+      # head :no_content
+      render json: {} #OR, in postman returns an {}, an empty json object because fetch request expects a json to parse
+    else
+      render json: { error: "Bird not found"}, status: :not_found
+    end
+  end
+
   private
 
   def bird_params
